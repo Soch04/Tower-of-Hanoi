@@ -1,14 +1,15 @@
 """
 Towers of Hanoi:
-The game consists of three towers and disks of different
-sizes. The game starts with the disks 
-stacked in tower A, ordered with the smallest at the top.
+    The game consists of three towers and disks of different
+    sizes. The game starts with the disks stacked in tower A, 
+    ordered with the smallest at the top.
 
 Brief Instructions:
-The objective of the puzzle is to move the entire stack to another rod.
+    The objective of the puzzle is to move the entire stack from 
+    the initial rod to another rod.
 
-To move a disk from tower A to tower B, enter 'AB'.
-To quit the game, enter 'Q'.
+    Example: To move a disk from tower A to tower B, enter 'AB'.
+    To quit the game, enter 'Q'.
 
 Author:
     Sonya C
@@ -98,6 +99,8 @@ class Tower:
         return len(self.disks)
     
 class Game():
+    NUMBER_DISKS: int = 3 # "Number of disks", edit value to change number of disks.
+
     @staticmethod
     def push_disk(target_tower: Tower, current_tower: Tower) -> None:
         """Moves a disk from the current tower to the target tower if the move is valid.
@@ -111,15 +114,14 @@ class Game():
             print("No action: current tower is empty")
             return 
         
-        # Push if disk in target tower is greater than size of incoming disk.
-        if current_tower.peek() is not None and (target_tower.is_empty() or (current_tower.peek() < target_tower.peek())):
+        # Push if the target tower is empty OR the top disk in target tower is greater than size of incoming disk.
+        elif current_tower.peek() is not None and (target_tower.is_empty() or (current_tower.peek() < target_tower.peek())):
             target_tower.push(current_tower.pop())
             print(f"Moved disk to {target_tower.name}")
 
         else:
             print("No action: Can not add disk")
 
-    # PRINT TOWERS
     @staticmethod
     def print_towers(towers: list[Tower]):
         """Prints the state of all towers.
@@ -132,8 +134,22 @@ class Game():
                 print(disk)
             print(tower.name+"\n")
 
+    def setup_game(self) -> None:
+        """Sets up the game with towers and disks."""
+        self.towerA = Tower("A")
+        self.towerB = Tower("B")
+        self.towerC = Tower("C")
+
+        self.towers = [self.towerA, self.towerB, self.towerC]
+
+        # Initialize disks and add them to the first tower (A).
+        # For loop: Starts at "number of disks", stops at 0, decrements by 1.
+        # Change NUMBER_DISKS to change the starting number.
+        for size in range(self.NUMBER_DISKS, 0, -1):
+            self.towerA.push(Disk(size))  
+
     @staticmethod
-    def get_input() -> str:
+    def get_command() -> str:
         """Gets a command from the user. Verifies that the command is only 2 characters, or is the character Q.
 
         Returns:
@@ -146,51 +162,54 @@ class Game():
 
         return command
 
-    def main(self):
-        """Starts the game with a specific amount of towers and disks and handles the game loop.
+    def execute_command(self, command) -> None:
+        """Pushes disks from one tower to another based on a 2-character string input.
 
+        The first character (current tower) is the tower name from which the topmost disk is to be moved.
+        The second character (target tower) is the tower name to which the disk is to be moved.
+
+        Args:
+            command (str): A two-character string representing the move command, 
+                e.g., 'AB' to move top topmost disk from tower A to tower B
         """
-        towerA = Tower("A")
-        towerB = Tower("B")
-        towerC = Tower("C")
+        current_tower, target_tower = None, None  
 
-        towers: list[Tower] = [towerA,towerB,towerC]
+        for tower in self.towers:
+            if command[0] == tower.name: # Assign index 0 to corresponding tower name.
+                current_tower = tower
+            elif command[1] == tower.name: # Assign index 1 to corresponding tower name.
+                target_tower = tower
 
-        disk1 = Disk(1)
-        disk2 = Disk(2)
-        disk3 = Disk(3)
+        # If current and target towers are equal to a Tower object (are not set to None), push the current disk to target disk.
+        if current_tower and target_tower:
+            self.push_disk(target_tower, current_tower)
+        else:
+            print(f"{command} contains invalid values")
 
-        current_tower: Tower 
-        target_tower: Tower
-        command: str 
+    def is_win(self, towers: list[Tower]) -> bool:
+        """Checks if any of the towers, other than the first tower, has all disks, indicating a win."""
+        for tower in towers[1:]:
+            if tower.size() == self.NUMBER_DISKS: # Win if tower has all disks
+                return True
+             
+        return False
 
-        # Add disks to the first tower (A).
-        towerA.disks = [disk1,disk2,disk3]
 
-        Game.print_towers(towers)
-        command = Game.get_input()
+    def main(self) -> None:
+        """Starts the game and handles the game loop."""
+        self.setup_game()
+        self.print_towers(self.towers)
+        command = self.get_command()
 
-        # MAIN LOOP
         while command != "Q":
-            for tower in towers:
-                # Assign current tower, index 0 of input
-                if command[0] == tower.name:
-                    print(f"{tower.name} is current tower")
-                    current_tower = tower
+            self.execute_command(command)
+            self.print_towers(self.towers)
 
-                # Assign target tower, index 1 of input
-                elif command[1] == tower.name:
-                    print(f"{tower.name} is target tower")
-                    target_tower = tower
-                    
-            # Catch exception when the user inputs 2 letters, but not the ones representing the towers.
-            try:
-                Game.push_disk(target_tower, current_tower)
-            except UnboundLocalError:
-                print(f"{command} contains invalid values")
-
-            Game.print_towers(towers)
-            command = Game.get_input()
+            if self.is_win(self.towers):
+                print("You have completed the puzzle!")
+                command = "Q" # Setting command to Q automatically quits the game.
+            else:
+                command = self.get_command()
     
 if __name__ == "__main__":
     game = Game()
