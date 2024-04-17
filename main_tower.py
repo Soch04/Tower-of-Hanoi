@@ -4,9 +4,9 @@ The game consists of three towers and disks of different
 sizes. The game starts with the disks 
 stacked in tower A, ordered with the smallest at the top.
 
+Brief Instructions:
 The objective of the puzzle is to move the entire stack to another rod.
 
-Brief Instructions:
 To move a disk from tower A to tower B, enter 'AB'.
 To quit the game, enter 'Q'.
 
@@ -180,9 +180,6 @@ class Game():
                 elif command[1] == tower.name:
                     print(f"DEBUG:{tower.name} is target tower")
                     target_tower = tower
-                
-                else:
-                    print(f"DEBUG:{tower.name} Does not")
 
             Game.push_disk(target_tower, current_tower)
 
