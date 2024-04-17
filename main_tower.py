@@ -108,18 +108,18 @@ class Game():
         """
         # Do not push if there are no disks to push to target tower.
         if current_tower.is_empty():
-            print("\nNo action: current tower is empty")
+            print("No action: current tower is empty")
             return 
         
         # Push if disk in target tower is greater than size of incoming disk.
         if current_tower.peek() is not None and (target_tower.is_empty() or (current_tower.peek() < target_tower.peek())):
             target_tower.push(current_tower.pop())
-            print("\nAdded disk")
+            print(f"Moved disk to {target_tower.name}")
 
         else:
-            print("\nNo action: Can not add disk")
+            print("No action: Can not add disk")
 
-    # DEBUGGING : PRINT TOWERS
+    # PRINT TOWERS
     @staticmethod
     def print_towers(towers: list[Tower]):
         """Prints the state of all towers.
@@ -134,14 +134,16 @@ class Game():
 
     @staticmethod
     def get_input() -> str:
-        """Gets a command from the user and verifies that it is only 2 characters in length.
+        """Gets a command from the user. Verifies that the command is only 2 characters, or is the character Q.
 
         Returns:
             str: The command entered by the user.
         """
-        command = input("Move disk? ").upper()
-        while len(command) != 2:
+        command = input("Move disk? (Q to quit) ").upper()
+
+        while len(command) != 2 and command != "Q":
             command = input("Use only 2 letters ").upper()
+
         return command
 
     def main(self):
@@ -173,15 +175,19 @@ class Game():
             for tower in towers:
                 # Assign current tower, index 0 of input
                 if command[0] == tower.name:
-                    print(f"DEBUG:{tower.name} is current tower")
+                    print(f"{tower.name} is current tower")
                     current_tower = tower
 
                 # Assign target tower, index 1 of input
                 elif command[1] == tower.name:
-                    print(f"DEBUG:{tower.name} is target tower")
+                    print(f"{tower.name} is target tower")
                     target_tower = tower
-
-            Game.push_disk(target_tower, current_tower)
+                    
+            # Catch exception when the user inputs 2 letters, but not the ones representing the towers.
+            try:
+                Game.push_disk(target_tower, current_tower)
+            except UnboundLocalError:
+                print(f"{command} contains invalid values")
 
             Game.print_towers(towers)
             command = Game.get_input()
