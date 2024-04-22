@@ -1,3 +1,7 @@
+"""
+This file was made by Francisco Serrano-Robles
+"""
+
 #draws a red X with a white background
 #default grid item if draw key cannot identify something
 def drawNA(pen, crosser):
