@@ -1,10 +1,8 @@
-"""this makes the game look fire yo
-    by FSR
+"""
+This file was made by Francisco Serrano-Robles
 """
 
 import grid
-#currently unsed pallets but that is because i would need to rework my drawing method...
-import pallets
 from  main_tower import Game, Tower
 
 # #setting up the towers, these are constant and thus will be constantly referenced.
