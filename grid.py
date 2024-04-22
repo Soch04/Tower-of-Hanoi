@@ -349,20 +349,6 @@ class railway:
 #print(tammy)
 
 
-
-
-mapper = matrix(5,5,'#')
-
-mapper.feedToRow([0,0,0,0,0],0)
-mapper.feedToRow([0,1,1,1,0],1)
-mapper.feedToRow([0,0,0,1,0],2)
-mapper.feedToRow([0,1,1,1,0],3)
-mapper.feedToRow([0,0,0,0,0],4)
-
-print(mapper)
-mapper.drawGrid(1)
-
-
 #mapper.drawGrid(1)
 
 #mapzee = mapper.iterable()
