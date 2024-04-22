@@ -1,5 +1,6 @@
 """
 This file was made by Francisco Serrano-Robles
+this file does the graphics for the towers of hanoi game.
 """
 
 import grid
