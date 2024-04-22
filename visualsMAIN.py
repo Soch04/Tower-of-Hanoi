@@ -3,69 +3,89 @@
 """
 
 import grid
+#currently unsed pallets but that is because i would need to rework my drawing method...
 import pallets
-import main_tower
+from  main_tower import Game, Tower
 
-#setting up the towers, these are constant and thus will be constantly referenced.
-towwy = grid.matrix(6,5,'.')
-towwy.writeToPoint('C',(5,4))
-towwy.writeToPoint('B',(5,2))
-towwy.feedtoColumn(['.','.','1','2','3','A'],0)
+# #setting up the towers, these are constant and thus will be constantly referenced.
+backdrop = grid.matrix(6,5,'.')
+backdrop.writeToPoint('C',(5,4))
+backdrop.writeToPoint('B',(5,2))
+backdrop.feedtoColumn(['.','.','.','.','.','A'],0)
 
-#write to point takes coords as (Y,X), begining from the top left, and the starting index is (0,0)
-#these are just for show there is no logic
+# #write to point takes coords as (Y,X), begining from the top left, and the starting index is (0,0)
+# #these are just for show there is no logic
 
-towwy.drawGrid(1, pallets.drawkeyHanoi, 'brown')
+# backdrop.drawGrid(1, pallets.drawkeyHanoi, 'brown')
 
-print(towwy)
+#print(backdrop)
 
-class graphics(main_tower.Game):
-  
-    def main(self):
-        """Starts the game with a specific amount of towers and disks and handles the game loop.
 
-        """
-        towerA = main_tower.Tower ("A")
-        towerB = main_tower.Tower ("B")
-        towerC = main_tower.Tower ("C")
+class graphics(Game):
+      
+      def main(self) -> None:
+        """Starts the game and handles the game loop."""
+        self.setup_game()
+        self.print_towers(self.towers)
+        command = self.get_command()
 
-        towers: list[main_tower.Tower ] = [towerA,towerB,towerC]
-
-        disk1 = main_tower.Disk(1)
-        disk2 = main_tower.Disk(2)
-        disk3 = main_tower.Disk(3)
-
-        current_tower: main_tower.Tower 
-        target_tower: main_tower.Tower 
-        command: str 
-
-        # Add disks to the first tower (A).
-        towerA.disks = [disk1,disk2,disk3]
-
-        main_tower.Game.print_towers(towers)
-        command = main_tower.Game.get_input()
-
-        # MAIN LOOP
         while command != "Q":
-            for tower in towers:
-                # Assign current tower, index 0 of input
-                if command[0] == tower.name:
-                    print(f"{tower.name} is current tower")
-                    current_tower = tower
+            self.execute_command(command)
+            self.print_towers(self.towers)
 
-                # Assign target tower, index 1 of input
-                elif command[1] == tower.name:
-                    print(f"{tower.name} is target tower")
-                    target_tower = tower
+            if self.is_win(self.towers):
+                print("You have completed the puzzle!")
+                command = "Q" # Setting command to Q automatically quits the game.
+            else:
+                command = self.get_command()
+
+      @staticmethod
+      def print_towers(towers: list[Tower]):
+        """Prints the state of all towers.
+
+        Args:
+            towers (List[Tower]): A list of all towers.
+        """
+
+        # this stores the data of where the disks will be drawn. it stores it as short lists of [disk.size,tower it is on]
+        drawingdisk = []
+
+        for tower in towers:
+            #pointer is used to easily keep track of positions on the tower when iterating through them
+            pointer = backdrop.rows - 2
+            #print(pointer)
+            #no one cares for empty towers, this is just an optimization
+            if tower.is_empty() == False:
+                #instead of doing a more "elbow grease" method I just used my scangridsingular to find the toweer we are looking for
+                #from there we have the coords of it on the background, we mainly just want what column its in to place the blocks.
+                currenttow = backdrop.scanGridSingle(tower.name)
+                for block in reversed(tower.disks):
                     
-            # Catch exception when the user inputs 2 letters, but not the ones representing the towers.
-            try:
-                main_tower.Game.push_disk(target_tower, current_tower)
-            except UnboundLocalError:
-                print(f"{command} contains invalid values")
+                    drawingdisk.append([block.size,[pointer,currenttow[1]]])
+                    pointer -= 1
+        
+        #image is what is actual printed, backdrop is kept as place holder so we can have a constant reference to the ABC and grid
+        image = backdrop.duple()
+        for item in drawingdisk:
+            image.writeToPoint(*item)
+        
+        print(image)
 
-            main_tower.Game.print_towers(towers)
-            command = main_tower.Game.get_input()
+
+      # this goes cucrenlty unchanged until I really fix up my graphical method for grid...
+      @staticmethod
+      def get_command() -> str:
+        """Gets a command from the user. Verifies that the command is only 2 characters, or is the character Q.
+
+        Returns:
+            str: The command entered by the user.
+        """
+        command = input("Move disk? (Q to quit) ").upper()
+
+        while len(command) != 2 and command != "Q":
+            command = input("Use only 2 letters ").upper()
+
+        return command
 
 
 jemmy = graphics()
