@@ -4,7 +4,7 @@ this file does the graphics for the towers of hanoi game.
 """
 
 import grid
-from  main_tower import Game, Tower
+from  tower_logic import Game, Tower
 
 # #setting up the towers, these are constant and thus will be constantly referenced.
 backdrop = grid.matrix(6,5,'.')
