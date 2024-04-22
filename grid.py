@@ -1,5 +1,7 @@
 """
 This file was made by Francisco Serrano-Robles
+this is a multi-purpose matrix class.
+it also has a small railway class slapped on it.
 """
 
 #draws a red X with a white background
