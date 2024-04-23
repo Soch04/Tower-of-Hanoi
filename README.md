@@ -13,6 +13,7 @@ The objective of the puzzle is to move all disks from the initial tower to anoth
 ## The Code:
 The following is a brief overview of the code:
 
+### Objects:
 **Disks:**
 A disk is an object that holds a `size` value. A set value determines the number of disks.
 - You may change the number of disks by changing the value of `NUMBER_DISKS` in  `tower_logic` under the class `Game`.
@@ -22,6 +23,26 @@ An object with a `name` value and a list to store all the disks. It is based on 
 These functions manipulate disks from one tower to another.
 
 As default, we settled on three tower objects and three disk objects. 
+
+### Visuals:
+A background is created for towers A, B, and C.
+
+Visuals are done by iterating through each tower object and checking for disks. When all discs are identified, they are drawn accordingly onto the background.
+
+### Logic:
+#### Setup:
+- The game is set up by creating a set number of tower objects and discs
+- The towers are put into a list.
+
+#### Game Loop:
+1. The game prints the current tower and disc arrangement and waits for the user to input a two-character string (ex: `AB`). 
+2. The game iterates through the `Tower` list, attempting to match the given characters with a tower `name`.
+   - The first index of the string is assigned as the `current_tower`
+   - The second index of the string is assigned as the `target_tower`
+3. The game pushes the topmost disk from the `current_tower` to the `target_tower` ONLY IF both the `current_tower` and `target_tower` exist (meaning that the characters existed as tower names)
+4. The game prints the towers and disk arrangement to the screen.
+5. the game checks if the user wins.
+6. The loop continues until the user wins or presses `Q`.
 
 ## Gameplay
 ### Introduction
