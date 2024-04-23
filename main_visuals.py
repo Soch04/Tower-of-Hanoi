@@ -22,22 +22,6 @@ backdrop.feedtoColumn(['.','.','.','.','.','A'],0)
 
 class graphics(Game):
       
-      def main(self) -> None:
-        """Starts the game and handles the game loop."""
-        self.setup_game()
-        self.print_towers(self.towers)
-        command = self.get_command()
-
-        while command != "Q":
-            self.execute_command(command)
-            self.print_towers(self.towers)
-
-            if self.is_win(self.towers):
-                print("You have completed the puzzle!")
-                command = "Q" # Setting command to Q automatically quits the game.
-            else:
-                command = self.get_command()
-
       @staticmethod
       def print_towers(towers: list[Tower]):
         """Prints the state of all towers.
@@ -51,11 +35,12 @@ class graphics(Game):
 
         for tower in towers:
             #pointer is used to easily keep track of positions on the tower when iterating through them
+            #pointer is set to right above the letters labeling the towers
             pointer = backdrop.rows - 2
-            #print(pointer)
+ 
             #no one cares for empty towers, this is just an optimization
             if tower.is_empty() == False:
-                #instead of doing a more "elbow grease" method I just used my scangridsingular to find the toweer we are looking for
+                #instead of doing a more "elbow grease" method I just used my scangridsingular() to find the tower we are looking for
                 #from there we have the coords of it on the background, we mainly just want what column its in to place the blocks.
                 currenttow = backdrop.scanGridSingle(tower.name)
                 for block in reversed(tower.disks):
@@ -69,20 +54,6 @@ class graphics(Game):
             image.writeToPoint(*item)
         
         print(image)
-
-
-      # this goes cucrenlty unchanged until I really fix up my graphical method for grid...
-      @staticmethod
-      def get_command() -> str:
-        """Gets a command from the user. Verifies that the command is only 2 characters, or is the character Q.
-
-        Returns:
-            str: The command entered by the user.
-        """
-        command = input("Move disk? (Q to quit) ").upper()
-
-        while len(command) != 2 and command != "Q":
-            command = input("Use only 2 letters ").upper()
 
         return command
 
