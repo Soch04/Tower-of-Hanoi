@@ -39,9 +39,9 @@ Visuals are done by iterating through each tower object and checking for disks. 
 2. The game iterates through the `Tower` list, attempting to match the given characters with a tower `name`.
    - The first index of the string is assigned as the `current_tower`
    - The second index of the string is assigned as the `target_tower`
-3. The game pushes the topmost disk from the `current_tower` to the `target_tower` ONLY IF both the `current_tower` and `target_tower` exist (meaning that the characters existed as tower names)
+3. The game pushes the topmost disk from the `current_tower` to the `target_tower` ONLY IF both the `current_tower` and `target_tower` exist (meaning that the characters existed as tower names).
 4. The game prints the towers and disk arrangement to the screen.
-5. the game checks if the user wins.
+5. The game checks if the user wins.
 6. The loop continues until the user wins or presses `Q`.
 
 ## Gameplay
