@@ -1,6 +1,6 @@
 ### Credits
-- Logic implemented by Sonya Cheteyan
-- Visuals implemented by Francisco Serrano-Robles
+- Code logic and README written by Sonya Cheteyan
+- Visuals for the towers implemented by Francisco Serrano-Robles
 
 # Tower of Hanoi:
 *Note: The GIF is not from the project.*
@@ -28,13 +28,14 @@ As default, we settled on three tower objects and three disk objects.
 - The game begins with the disks stacked in tower A, ordered with the smallest at the top.
 - Numbers represent disks of different sizes, with three being the largest.
   
-The following image is from the project. 
+The following image is from the project:
 
 ![Screenshot 2024-04-22 190803](https://github.com/Soch04/Tower-of-Hanoi/assets/79487467/e11151ed-faee-4104-816e-98761dd65f72)
 
-**Note:** Changed the number of disks from 3 to 4.
+**Note:** Changed the number of disks from 3 to 4:
 
-![Screenshot 2024-04-22 191951](https://github.com/Soch04/Tower-of-Hanoi/assets/79487467/e6d2f0a1-7cb0-4586-a442-5cd1a5e677a0)
+![this](https://github.com/Soch04/Tower-of-Hanoi/assets/79487467/35ddc56d-c279-40df-a119-ec961144997b)
+
 
 ### Input
 
@@ -50,9 +51,11 @@ The following image is from the project.
 ### Invalid Input
 
 - The game accounts for invalid input:
-  - If the user does not specifically enter two letters will be prompted to retry.
+  - If the user does not specifically enter two letters, the game will prompt them to retry.
   - If the user enters two letters that do not represent a tower (ex: `XX`), the game will not move a disk.
   - If the user tries to move a disk between valid towers, but the disk on the current tower is larger than the one on the target tower, the game will notify the user.
+    
+GIF demonstrating input handling:
 
 ![Gif for Hanoi](https://github.com/Soch04/Tower-of-Hanoi/assets/79487467/c26e6ee7-9718-49bc-ac0f-2d4e8da0701b)
 
