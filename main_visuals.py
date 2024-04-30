@@ -7,7 +7,7 @@ import grid
 from  tower_logic import Game, Tower
 
 # #setting up the towers, these are constant and thus will be constantly referenced.
-backdrop = grid.matrix(NUMBER_DISKS + 3 ,5,'.')
+backdrop = grid.matrix(Game.NUMBER_DISKS + 3 ,5,'.')
 backdrop.writeToPoint('C',(backdrop.rows-1,4))
 backdrop.writeToPoint('B',(backdrop.rows-1,2))
 backdrop.writeToPoint('A',(backdrop.rows-1,0))
@@ -54,8 +54,6 @@ class graphics(Game):
             image.writeToPoint(*item)
         
         print(image)
-
-        return command
 
 
 jemmy = graphics()
