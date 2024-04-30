@@ -7,10 +7,10 @@ import grid
 from  tower_logic import Game, Tower
 
 # #setting up the towers, these are constant and thus will be constantly referenced.
-backdrop = grid.matrix(6,5,'.')
-backdrop.writeToPoint('C',(5,4))
-backdrop.writeToPoint('B',(5,2))
-backdrop.feedtoColumn(['.','.','.','.','.','A'],0)
+backdrop = grid.matrix(NUMBER_DISKS + 3 ,5,'.')
+backdrop.writeToPoint('C',(backdrop.rows-1,4))
+backdrop.writeToPoint('B',(backdrop.rows-1,2))
+backdrop.writeToPoint('A',(backdrop.rows-1,0))
 
 # #write to point takes coords as (Y,X), begining from the top left, and the starting index is (0,0)
 # #these are just for show there is no logic
