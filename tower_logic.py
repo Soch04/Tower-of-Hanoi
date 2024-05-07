@@ -184,11 +184,12 @@ class Game:
         current_tower, target_tower = None, None
 
         for tower in self.towers:
-            if command[0] == tower.name:  # Assign index 0 to corresponding tower name.
+            # Assign index 0 to corresponding tower name.
+            if command[0] == tower.name:  
                 current_tower = tower
-            elif (
-                command[1] == tower.name
-            ):  # Assign index 1 to corresponding tower name.
+
+            # Assign index 1 to corresponding tower name.
+            elif (command[1] == tower.name):  
                 target_tower = tower
 
         # If current and target towers are equal to a Tower object (are not set to None),
